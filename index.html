@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b14">
+<meta name="description" content="Adii AI — ask questions and get helpful answers.">
+<title>Adii AI — Chat</title>
+<style>
+:root{color-scheme:dark;--bg:#080b14;--panel:#101625;--line:#242d43;--text:#eef2ff;--muted:#98a4bd;--accent:#8b5cf6;--cyan:#22d3ee}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -10%,#22214c 0,transparent 45%),var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100dvh}
+.app{max-width:900px;margin:auto;min-height:100dvh;display:flex;flex-direction:column;padding:0 14px}
+header{display:flex;align-items:center;gap:12px;padding:18px 2px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#080b14eF;backdrop-filter:blur(14px);z-index:2}
+.logo{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;font-weight:900;font-size:21px;background:linear-gradient(135deg,var(--accent),var(--cyan));color:#080b14;box-shadow:0 0 28px #8b5cf633}
+.brand{flex:1}.brand h1{font-size:18px;margin:0;letter-spacing:.3px}.brand p{font-size:12px;color:var(--muted);margin:2px 0 0}.status{font-size:12px;color:#a5f3fc;display:flex;align-items:center;gap:6px}.dot{width:7px;height:7px;border-radius:50%;background:#22d3ee;box-shadow:0 0 9px #22d3ee}
+#chat{flex:1;padding:22px 0 130px;display:flex;flex-direction:column;gap:16px}.welcome{text-align:center;margin:auto 0;padding:25px 0 10px}.orb{width:76px;height:76px;margin:0 auto 18px;border-radius:26px;display:grid;place-items:center;font-size:34px;background:linear-gradient(135deg,#8b5cf633,#22d3ee22);border:1px solid #514c8c}.welcome h2{font-size:clamp(25px,6vw,36px);margin:0 0 8px}.welcome p{color:var(--muted);margin:0 auto 22px;max-width:430px}.suggestions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:620px;margin:auto}.suggestion{background:#101625;border:1px solid var(--line);border-radius:14px;padding:13px;text-align:left;color:var(--text);cursor:pointer;font:inherit;font-size:14px}.suggestion:hover{border-color:var(--accent);background:#17172b}
+.msg{display:flex;gap:10px;align-items:flex-start;max-width:100%;animation:appear .18s ease-out}.msg.user{flex-direction:row-reverse}.avatar{flex:0 0 32px;height:32px;border-radius:11px;display:grid;place-items:center;background:#20243b;font-size:14px}.msg.assistant .avatar{background:linear-gradient(135deg,#8b5cf6,#22d3ee);color:#080b14;font-weight:900}.bubble{max-width:min(78%,680px);padding:12px 15px;border:1px solid var(--line);background:var(--panel);border-radius:4px 17px 17px 17px;white-space:pre-wrap;overflow-wrap:anywhere}.user .bubble{background:#27204a;border-color:#51418b;border-radius:17px 4px 17px 17px}.bubble.error{border-color:#7f1d1d;color:#fecaca}.typing{color:var(--muted);font-size:14px}.typing span{animation:blink 1s infinite}.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+.composer-wrap{position:fixed;bottom:0;left:0;right:0;padding:12px 14px max(14px,env(safe-area-inset-bottom));background:linear-gradient(transparent,#080b14 22%);z-index:3}.composer{max-width:872px;margin:auto;display:flex;align-items:flex-end;gap:9px;padding:9px;background:#111827;border:1px solid #343d55;border-radius:19px;box-shadow:0 12px 40px #0008}.composer:focus-within{border-color:#7770d6;box-shadow:0 0 0 3px #8b5cf622}.composer textarea{resize:none;max-height:140px;min-height:42px;flex:1;border:0;outline:0;background:transparent;color:var(--text);padding:10px 8px;font:inherit}.composer textarea::placeholder{color:#7f8ba5}.send{width:43px;height:43px;border:0;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--cyan));color:#080b14;font-size:20px;font-weight:900;cursor:pointer}.send:disabled{opacity:.45;cursor:not-allowed}.foot{max-width:872px;margin:6px auto 0;text-align:center;color:#77829a;font-size:11px}.actions{display:flex;justify-content:center;gap:10px;margin-top:16px}.smallbtn{background:transparent;border:1px solid var(--line);border-radius:10px;padding:7px 11px;color:var(--muted);font-size:12px;cursor:pointer}
+@keyframes blink{50%{opacity:.2}}@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(max-width:520px){.app{padding:0 11px}header{padding:13px 1px}.status{font-size:11px}.suggestions{grid-template-columns:1fr}.welcome{margin:20px 0}.bubble{max-width:84%;font-size:15px}.composer-wrap{padding-left:10px;padding-right:10px}#chat{padding-top:18px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">A</div><div class="brand"><h1>Adii AI</h1><p>Your AI assistant · Hindi & English</p></div><div class="status"><span class="dot"></span><span>Ready to chat</span></div></header>
+<main id="chat" aria-live="polite">
+<section class="welcome" id="welcome"><div class="orb">✦</div><h2>Hey, kya poochna hai?</h2><p>Main sawaalon ke jawab, ideas, padhai, coding aur writing mein madad kar sakta hoon.</p><div class="suggestions">
+<button class="suggestion">📚 Ek topic simple Hindi mein samjhao</button><button class="suggestion">💡 Mere liye ek creative idea do</button><button class="suggestion">💻 Ek website ka code likho</button><button class="suggestion">✍️ Ek message ya story likho</button>
+</div><div class="actions"><button class="smallbtn" id="clearWelcome">Nayi chat</button></div></section>
+</main>
+</div>
+<div class="composer-wrap"><form class="composer" id="form"><textarea id="input" rows="1" maxlength="6000" placeholder="Apna sawaal yahan likho..." aria-label="Your message"></textarea><button class="send" id="send" aria-label="Send message">➤</button></form><div class="foot">AI kabhi-kabhi galat jawab de sakta hai · Important information verify karein</div></div>
+<script>
+const chat=document.querySelector('#chat'), form=document.querySelector('#form'), input=document.querySelector('#input'), send=document.querySelector('#send');
+let history=[], busy=false;
+function scrollBottom(){window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});}
+function addMessage(role,content,extra=''){const welcome=document.querySelector('#welcome');if(welcome)welcome.remove();const row=document.createElement('div');row.className='msg '+role;const avatar=document.createElement('div');avatar.className='avatar';avatar.textContent=role==='user'?'You':'A';const bubble=document.createElement('div');bubble.className='bubble '+extra;bubble.textContent=content;row.append(avatar,bubble);chat.append(row);scrollBottom();return bubble;}
+function setBusy(value){busy=value;send.disabled=value;input.disabled=value;send.textContent=value?'…':'➤';}
+async function ask(text){text=text.trim();if(!text||busy)return;addMessage('user',text);history.push({role:'user',content:text});input.value='';input.style.height='auto';setBusy(true);const typing=addMessage('assistant','Soch raha hoon…','typing');try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,history:history.slice(0,-1)})});let data={};try{data=await r.json()}catch{}typing.parentElement.remove();if(!r.ok)throw new Error(data.error||'Server se jawab nahi mila.');addMessage('assistant',data.answer);history.push({role:'assistant',content:data.answer});}catch(e){typing.parentElement.remove();addMessage('assistant',e.message||'Connection error. Dobara try karein.','error');history.pop();}finally{setBusy(false);input.focus();}}
+form.addEventListener('submit',e=>{e.preventDefault();ask(input.value);});
+input.addEventListener('input',()=>{input.style.height='auto';input.style.height=Math.min(input.scrollHeight,140)+'px';});
+input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();form.requestSubmit();}});
+document.querySelectorAll('.suggestion').forEach(b=>b.addEventListener('click',()=>ask(b.textContent.replace(/^[^ ]+ /,''))));
+document.querySelector('#clearWelcome').addEventListener('click',()=>{history=[];chat.innerHTML=`<section class="welcome" id="welcome"><div class="orb">✦</div><h2>Hey, kya poochna hai?</h2><p>Main sawaalon ke jawab, ideas, padhai, coding aur writing mein madad kar sakta hoon.</p><div class="suggestions"><button class="suggestion">📚 Ek topic simple Hindi mein samjhao</button><button class="suggestion">💡 Mere liye ek creative idea do</button><button class="suggestion">💻 Ek website ka code likho</button><button class="suggestion">✍️ Ek message ya story likho</button></div><div class="actions"><button class="smallbtn" id="clearWelcome">Nayi chat</button></div></section>`;document.querySelectorAll('.suggestion').forEach(b=>b.addEventListener('click',()=>ask(b.textContent.replace(/^[^ ]+ /))));document.querySelector('#clearWelcome').addEventListener('click',()=>location.reload());});
+</script>
+</body>
+</html>
